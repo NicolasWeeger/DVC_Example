@@ -14,9 +14,9 @@ pip install -r requirements.txt
 git init && echo ".venv" > .gitignore ; dvc init
 ```
 
-## Download historical stock data
+## Download or update historical stock data until today
 ```
-download_stock_data.py
+update_stock_data.py
 ```
 
 --> you are now set to 

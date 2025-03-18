@@ -23,9 +23,9 @@ def download_stock_data(ticker: str, save_path: str = "data/raw/"):
     else:
         last_date = "2015-01-01"  # Default start date if no previous data exists
     
-    # Determine the end date as yesterday
-    end_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
-    
+    # Determine the end date as today
+    end_date = datetime.now().strftime("%Y-%m-%d")
+
     if last_date >= end_date:
         print(f"Data for {ticker} is already up to date.")
         return
