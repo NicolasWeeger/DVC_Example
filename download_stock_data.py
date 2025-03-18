@@ -19,9 +19,9 @@ def download(ticker: str, start_date: str = "2015-01-01", end_date: str = "2025-
         print("Error: No data received. Check the ticker symbol!")
         return
     
-    # Save file
-    file_path = os.path.join(save_path, f"{ticker}.csv")
-    data.to_csv(file_path)
+    # Save file as Parquet
+    file_path = os.path.join(save_path, f"{ticker}.parquet")
+    data.to_parquet(file_path, engine='pyarrow')
     print(f"Data saved at: {file_path}")
     
     # Version data with DVC
@@ -30,3 +30,8 @@ def download(ticker: str, start_date: str = "2015-01-01", end_date: str = "2025-
     subprocess.run(["git", "commit", "-m", f"Add stock data for {ticker} to DVC"])
     
     print(f"{ticker} data successfully versioned with DVC!")
+
+
+if __name__ == "__main__":
+    ticker = "NVDA"  
+    download(ticker)
