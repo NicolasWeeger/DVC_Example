@@ -3,3 +3,4 @@ dvc
 pandas
 parquet
 pyarrow
+torch
