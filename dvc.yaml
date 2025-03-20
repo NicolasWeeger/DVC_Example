@@ -9,3 +9,14 @@ artifacts:
   transformer_model:
     path: models/transformer_model.pth
     type: model
+stages:
+  train:
+    cmd: python train.py
+    deps:
+    - data/raw
+    - train.py
+    params:
+    - base
+    - train
+    outs:
+    - models/model.pth

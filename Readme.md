@@ -68,4 +68,25 @@ python train_transformer_model.py
 **Note: DVC stores the models in the DVC cache. This can also be used with an external bucket for storing the files (see below). When the experiment is commited and pushed, it is tracked in the bucket and can be utilized by all users (and after cleaning the cache). The data, models and experiments that are not commited and pushed can only be used locally, which means they are lost when the cached is cleaned.**
 
 ## Automate experiments using pipelines 
+### Preparation 
+- parameterize the pipeline by using a params.yaml file
+- modularize pipeline steps in different files 
+- adapt the code to utilize the params.yaml contents
+
+### Create pipeline
+- `dvc stage add -n stagename ...` adds a pipeline stage to the dvc.yaml file including the stage "train" with its parameters from the params.yaml file, dependencies and ouptuts as well as a command to run the pipeline
+
+Example with the modified train.py:
+
+```bash
+dvc stage add -n train \
+  --params base,train \
+  --deps train.py --deps data/raw \
+  --outs models/model.pth \
+  python src/train.py
+```
+- `dvc dag` visualizes the pipeline in the terminal
+
+### Run the pipeline
+- `dvc exp run`runs the pipeline from the dvc.yaml file and captures the state of the workspace as DVC experiment 
 
