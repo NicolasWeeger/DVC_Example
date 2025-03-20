@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 import numpy as np
+from dvclive import Live
 
 def prepare_data(file_path):
     data = pd.read_parquet(file_path)
@@ -35,27 +36,35 @@ class TransformerModel(nn.Module):
         x = self.fc(x)
         return x
 
-def train_transformer(file_path):
+def train_transformer(file_path, epochs=10, lr=0.001):
     dataloader = prepare_data(file_path)
     model = TransformerModel(input_dim=1, hidden_dim=64, num_layers=2, output_dim=1)
     criterion = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=lr)
     
-    epochs = 10
-    for epoch in range(epochs):
-        for X_batch, y_batch in dataloader:
-            X_batch = X_batch.squeeze(-1)  # Ensure correct input shape (batch, seq_len, features)
-            optimizer.zero_grad()
-            output = model(X_batch)
-            loss = criterion(output.squeeze(), y_batch)
-            loss.backward()
-            optimizer.step()
-        print(f"Epoch {epoch+1}/{epochs}, Loss: {loss.item()}")
-    
-    torch.save(model.state_dict(), "transformer_model.pth")
-    print("Model training complete and saved as transformer_model.pth")
+    with Live() as live:
+        # Log hyperparameters with DVC
+        live.log_param("epochs", epochs) 
+        live.log_param("lr", lr) 
+        
+        for epoch in range(epochs):
+            for X_batch, y_batch in dataloader:
+                X_batch = X_batch.squeeze(-1)  # Ensure correct input shape (batch, seq_len, features)
+                optimizer.zero_grad()
+                output = model(X_batch)
+                loss = criterion(output.squeeze(), y_batch)
+                loss.backward()
+                optimizer.step()
+            
+            live.log_metric("loss", loss.item())  # Log loss with DVC
+            live.next_step()
+            print(f"Epoch {epoch+1}/{epochs}, Loss: {loss.item()}")
+        
+        torch.save(model.state_dict(), "models/transformer_model.pth")
+        live.log_artifact("models/transformer_model.pth", type = "model")  # Save experiment results
+    print("Model training complete and saved as models/transformer_model.pth")
 
 if __name__ == "__main__":
     ticker = "NVDA"
     file_path = f"data/raw/{ticker}.parquet"
-    train_transformer(file_path)
+    train_transformer(file_path, epochs=10, lr=0.001)
