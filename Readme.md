@@ -89,4 +89,4 @@ dvc stage add -n train \
 
 ### Run the pipeline
 - `dvc exp run` runs the pipeline from the dvc.yaml file and captures the state of the workspace as DVC experiment 
-- `dvc exp run --name "
+- `dvc exp run --name "batch-size_8" --set-param "train.batch_size=8"` changes the batch_size to 8 and runs the experiment

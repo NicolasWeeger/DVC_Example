@@ -20,9 +20,9 @@ stages:
         train:
           epochs: 10
           lr: 0.001
-          batch_size: 32
+          batch_size: 8
     outs:
     - path: models/model.pth
       hash: md5
-      md5: dace685a3446d017c5eaea6a8696272d
+      md5: 81f20515eb1763fbea3694bb994766c0
       size: 3386438
