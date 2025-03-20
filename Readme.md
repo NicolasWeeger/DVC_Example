@@ -88,5 +88,5 @@ dvc stage add -n train \
 - `dvc dag` visualizes the pipeline in the terminal
 
 ### Run the pipeline
-- `dvc exp run`runs the pipeline from the dvc.yaml file and captures the state of the workspace as DVC experiment 
-
+- `dvc exp run` runs the pipeline from the dvc.yaml file and captures the state of the workspace as DVC experiment 
+- `dvc exp run --name "

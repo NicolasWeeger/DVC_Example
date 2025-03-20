@@ -73,7 +73,13 @@ def train_transformer():
             live.next_step()
             print(f"Epoch {epoch+1}/{epochs}, Loss: {loss.item()}")
         
-        torch.save(model.state_dict(), "models/model.pth")
-        live.log_artifact("models/model.pth", type = "model")  # Save experiment results
+        torch.save(model.state_dict(), "./models/model.pth")
+        live.log_artifact("./models/model.pth", 
+                          type = "model",
+                          name = "transformer_model",
+                          desc = "Trained transformer model for time series prediction",
+                          labels = ["time_series", "transformer"])  # Save experiment results
     print("Model training complete and saved as models/model.pth")
 
+if __name__ == "__main__":
+    train_transformer()

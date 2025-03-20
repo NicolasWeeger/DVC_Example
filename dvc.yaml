@@ -7,8 +7,12 @@ plots:
     x: step
 artifacts:
   transformer_model:
-    path: models/transformer_model.pth
+    path: models/model.pth
     type: model
+    desc: Trained transformer model for time series prediction
+    labels:
+    - time_series
+    - transformer
 stages:
   train:
     cmd: python train.py
