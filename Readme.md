@@ -48,7 +48,7 @@ with Live() as live:
     torch.save(model.state_dict(), "models/model.pth")
     live.log_artifact("model.pth", type="model")
 ```
-### Example: train transformer model from downloaded stock data
+### Example: Train transformer model from downloaded stock data (note: this is just an example and not a good performing model)
 ```bash
 python train_transformer_model.py
 ```
@@ -67,7 +67,7 @@ python train_transformer_model.py
 
 **Note: DVC stores the models in the DVC cache. This can also be used with an external bucket for storing the files (see below). When the experiment is commited and pushed, it is tracked in the bucket and can be utilized by all users (and after cleaning the cache). The data, models and experiments that are not commited and pushed can only be used locally, which means they are lost when the cached is cleaned.**
 
-## Automate experiments using pipelines 
+# Automate experiments using pipelines 
 ### Preparation 
 - parameterize the pipeline by using a params.yaml file
 - modularize pipeline steps in different files 
@@ -90,3 +90,17 @@ dvc stage add -n train \
 ### Run the pipeline
 - `dvc exp run` runs the pipeline from the dvc.yaml file and captures the state of the workspace as DVC experiment 
 - `dvc exp run --name "batch-size_8" --set-param "train.batch_size=8"` changes the batch_size to 8 and runs the experiment
+- `dvc exp run --name "batch-size-tryout" --queue -S "train.batch_size=8,16,32"` queues 3 experiments with different batch sizes, to run: 
+- `dvc exp run --run-all`
+
+# Store Data in external Bucket 
+TODO: 
+## Generate  remote:
+- ```dvc remote add -d remotename url:port/path``` added  einen datastore auf einem Server, Beispiel: ```dvc remote add -d heymates_remote ssh://login@serverip/path/to/datastore```
+- ```dvc remote modify remote_name ask_password true``` enabled passwort abfrage beim pushen
+
+## Upload Data:
+- ```dvc add path/data.xml``` added die Daten zu DVC
+- ```git add path/data.xml.dvc data/.gitignore``` added den Bezug zu 
+- ```git commit -m "Add raw data"``` tracked changes for dvc
+- ```dvc push``` 
