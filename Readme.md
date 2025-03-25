@@ -96,11 +96,12 @@ dvc stage add -n train \
 # Store Data in external Bucket 
 TODO: 
 ## Generate  remote:
-- ```dvc remote add -d remotename url:port/path``` added  einen datastore auf einem Server, Beispiel: ```dvc remote add -d heymates_remote ssh://login@serverip/path/to/datastore```
-- ```dvc remote modify remote_name ask_password true``` enabled passwort abfrage beim pushen
+- ```dvc remote add -d remotename url:port/path``` adds config for remote datastore location ```dvc remote add -d heymates_remote ssh://login@serverip/path/to/datastore```
+- ```dvc remote modify remote_name ask_password true``` enables password auth at connection
+- `dvc remote modify --local remote_name password yourpassword` adds config.local file with the password stored and adds this file to gitignore
 
 ## Upload Data:
-- ```dvc add path/data.xml``` added die Daten zu DVC
+- ```dvc add path/data.xml``` adds data to DVC (if not done earlier)
 - ```git add path/data.xml.dvc data/.gitignore``` added den Bezug zu 
 - ```git commit -m "Add raw data"``` tracked changes for dvc
 - ```dvc push``` 
