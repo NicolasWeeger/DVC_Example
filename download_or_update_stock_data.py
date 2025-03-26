@@ -4,7 +4,7 @@ import pandas as pd
 import subprocess
 from datetime import datetime, timedelta
 
-def download_stock_data(ticker: str, save_path: str = "data/raw/"):
+def download_update_stock_data(ticker: str, save_path: str = "data/raw/"):
     """
     Downloads or updates historical stock price data and saves it as a Parquet file.
     Then, it is versioned using DVC.
@@ -58,4 +58,4 @@ def download_stock_data(ticker: str, save_path: str = "data/raw/"):
 
 if __name__ == "__main__":
     ticker = "NVDA"  # Change the symbol for other stocks
-    download_stock_data(ticker)
+    download_update_stock_data(ticker)

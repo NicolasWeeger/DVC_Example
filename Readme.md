@@ -54,13 +54,13 @@ python train_transformer_model.py
 ```
 **Note: Git commit also handles dvc commit for dvc added data, which is done automatically with the usage of dvclive**
 
-**--> These steps enable you to do manual experiments using the examples `update_stock_data.py` and `train_transformer_model.py`, utilizing DVC to control data versioning, experiment tracking and mdoel versioning**
+**--> These steps enable you to do manual experiments using the examples `update_stock_data.py` and `train_transformer_model.py`, utilizing DVC to control data versioning, experiment tracking and model versioning**
 
 ### Vizualize tracked experiments
 #### DVC extension for VSCode
 - Download the DVC extension for VSCode
 - With this extension, you can see and compare the DVC Experiments, show plots, restore models, datasets and parameters to previous experiments
-#### Other methods (eg. DVC CLI usage)
+#### Other methods (DVC CLI or DVC Studio usage)
 - see: https://dvc.org/doc/user-guide/experiment-management/comparing-experiments
  
 ---
@@ -95,21 +95,27 @@ dvc stage add -n train \
 
 # Store Data in external Bucket 
 ## Generate  remote:
-- ```dvc remote add -d remotename url:port/path``` adds config for remote datastore location ```dvc remote add -d heymates_remote ssh://login@serverip/path/to/datastore``` #Note: This needs to be the absolute path
-- ```dvc remote modify remote_name ask_password true``` enables password auth at connection
+- `dvc remote add -d remotename url:port/path` adds config for remote datastore location `dvc remote add -d remote_name ssh://login@serverip/path/to/datastore` #Note: This needs to be the absolute path
+### Connect to remote via SSH
+- Use existing SSH key if possible or generate SSH Key (`ssh-keygen`)
+- `ssh-copy-id name@i.p.ad.dre.ss` to copy your SSH key to the server
+- `dvc push` authenticates with the ssh key from the ssh-configuration (on ubuntu `~/.ssh`)
+### Connect to remote via password
+- `dvc remote modify remote_name ask_password true` enables password auth at connection
 - `dvc remote modify --local remote_name password yourpassword` adds config.local file with the password stored and adds this file to gitignore
 
+
 ## Upload Data:
-- ```dvc add path/data.xml``` adds data to DVC (if not done earlier)
-- ```git add path/data.xml.dvc data/.gitignore``` added den Bezug zu 
-- ```git commit -m "Add raw data"``` tracked changes for dvc
-- ```dvc push``` uploads the data to the remote store
+- `dvc add path/data.xml` adds data to DVC (if not done earlier)
+- `git add path/data.xml.dvc data/.gitignore` added den Bezug zu 
+- `git commit -m "Add raw data"` tracked changes for dvc
+- `dvc push` uploads the data to the remote store
 
 
 ## Notes:
 - DVC stores data and experiments in the .dvc/cache/files/md5 directory 
-- This means it copies (or links) the data and hashes it
-- Only f BTRFS data management is available on your system, the data does not need to be copied (hardlink and symlink are not recommended due to the risk of data corruption)
+  - This means it copies (or links) the data and hashes it
+  - Only f BTRFS data management is available on your system, the data does not need to be copied (hardlink and symlink are not recommended due to the risk of data corruption)
 - For experiment tracking, the dvc.yaml is copied to .dvc/cache/runs directory
 - `dvc push` copies the cache to the remote 
 - `dvc gc` cleans the local cache (deletes all files from cache other than the current working ones)

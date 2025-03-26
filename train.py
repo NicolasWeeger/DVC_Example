@@ -5,7 +5,6 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 import numpy as np
-from dvclive import Live
 import yaml
 
 def prepare_data(file_path):
@@ -38,8 +37,6 @@ class TransformerModel(nn.Module):
         return x
 
 def train_transformer():
-    import yaml
-
     # read params.yaml
     with open("params.yaml", "r") as file:
         params = yaml.safe_load(file)
@@ -55,6 +52,8 @@ def train_transformer():
     criterion = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
     
+    from dvclive import Live
+
     with Live() as live:
         # Log hyperparameters with DVC
         live.log_param("epochs", epochs) 

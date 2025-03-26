@@ -5,7 +5,6 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 import numpy as np
-from dvclive import Live
 
 def prepare_data(file_path):
     data = pd.read_parquet(file_path)
@@ -42,11 +41,9 @@ def train_transformer(file_path, epochs=10, lr=0.001):
     criterion = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
     
-    with Live() as live:
-        # Log hyperparameters with DVC
-        live.log_param("epochs", epochs) 
-        live.log_param("lr", lr) 
-        
+    from dvclive import Live
+
+    with Live() as live:      
         for epoch in range(epochs):
             for X_batch, y_batch in dataloader:
                 X_batch = X_batch.squeeze(-1)  # Ensure correct input shape (batch, seq_len, features)
