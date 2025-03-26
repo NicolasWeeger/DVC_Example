@@ -3,7 +3,6 @@
 [cache]
     type = copy
 ['remote "tax_datastore"']
-    url = ssh://192.168.1.97/Dokumente/dvc/datastores/tax_datastore
+    url = ssh://192.168.1.97/home/remote/Dokumente/dvc/datastores/tax_datastore
     ask_password = true
     user = remote
-    port = 22
