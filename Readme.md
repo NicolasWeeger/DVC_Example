@@ -94,7 +94,6 @@ dvc stage add -n train \
 - `dvc exp run --run-all`
 
 # Store Data in external Bucket 
-TODO: 
 ## Generate  remote:
 - ```dvc remote add -d remotename url:port/path``` adds config for remote datastore location ```dvc remote add -d heymates_remote ssh://login@serverip/path/to/datastore``` #Note: This needs to be the absolute path
 - ```dvc remote modify remote_name ask_password true``` enables password auth at connection
