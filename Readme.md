@@ -1,5 +1,5 @@
 # DVC for data versioning, experiment tracking and model versioning
-This is a blueprint for using DVC for data versioning, experiment tracking and model versioning for small to medium datasets. The scope of this project is to introduce the usage of DVC, show how to use DVC for your own project and give an example implementation for comparison and testing. 
+This is a reference application for using DVC for data versioning, experiment tracking and model versioning for **small to medium datasets**. The scope of this project is to introduce the usage of DVC, show how to use DVC for your own project and give an example implementation for comparison and testing. 
 
 For more information see the official DVC documentation: https://dvc.org/doc/start.
 
