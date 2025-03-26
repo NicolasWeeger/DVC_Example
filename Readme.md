@@ -96,7 +96,7 @@ dvc stage add -n train \
 # Store Data in external Bucket 
 TODO: 
 ## Generate  remote:
-- ```dvc remote add -d remotename url:port/path``` adds config for remote datastore location ```dvc remote add -d heymates_remote ssh://login@serverip/path/to/datastore```
+- ```dvc remote add -d remotename url:port/path``` adds config for remote datastore location ```dvc remote add -d heymates_remote ssh://login@serverip/path/to/datastore``` #Note: This needs to be the absolute path
 - ```dvc remote modify remote_name ask_password true``` enables password auth at connection
 - `dvc remote modify --local remote_name password yourpassword` adds config.local file with the password stored and adds this file to gitignore
 
@@ -104,4 +104,14 @@ TODO:
 - ```dvc add path/data.xml``` adds data to DVC (if not done earlier)
 - ```git add path/data.xml.dvc data/.gitignore``` added den Bezug zu 
 - ```git commit -m "Add raw data"``` tracked changes for dvc
-- ```dvc push``` 
+- ```dvc push``` uploads the data to the remote store
+
+
+## Notes:
+- DVC stores data and experiments in the .dvc/cache/files/md5 directory 
+- This means it copies (or links) the data and hashes it
+- Only f BTRFS data management is available on your system, the data does not need to be copied (hardlink and symlink are not recommended due to the risk of data corruption)
+- For experiment tracking, the dvc.yaml is copied to .dvc/cache/runs directory
+- `dvc push` copies the cache to the remote 
+- `dvc gc` cleans the local cache (deletes all files from cache other than the current working ones)
+- `dvc checkout <branch-or-commit>` checks out a dedicated experiment

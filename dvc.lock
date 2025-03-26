@@ -24,5 +24,5 @@ stages:
     outs:
     - path: models/model.pth
       hash: md5
-      md5: 81f20515eb1763fbea3694bb994766c0
+      md5: 8e45f03eec91bc4aa7a222fa2048b16e
       size: 3386438
