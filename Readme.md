@@ -19,7 +19,7 @@ pip install -r requirements.txt
 git init && echo ".venv" > .gitignore && dvc init && git commit -m "Initialize git and DVC
 ```
 
-# Setup DVC for data and modelversioning and experiment tracking
+# Setup DVC for data- and model versioning and experiment tracking
 ## Add DVC version control to your data
 ```bash
 dvc add "path/to/file.parquet" ; git add . ; git commit -m "Add initial dataset to DVC" # Add your datapath here
